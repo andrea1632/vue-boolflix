@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComp @userSearch="saveSearch" />
-    <MainComp :movies="moviesArray" />
+    <MainComp :movies="moviesArray" :shows="showArray" />
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   },
   data(){
     return{
+      showArray: [],
       moviesArray: [],
       apiKey: "e2f2427f18131144ee68125bfac38779",
       inputSearch: '',
@@ -33,7 +34,10 @@ export default {
       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&language=it-IT&query=${txt}`)
       .then( (res)=>{
       this.moviesArray = res.data.results
-      console.log(this.moviesArray)
+    } )
+      axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${this.apiKey}&language=it-IT&query=${txt}`)
+      .then( (res)=>{
+      this.showArray = res.data.results
     } )
  
     }
@@ -43,5 +47,9 @@ export default {
 
 <style lang="scss">
 @import "bootstrap/dist/css/bootstrap.min.css";
+.flagContainer{
+  width: 50px;
+  height: 50px;
+}
 
 </style>

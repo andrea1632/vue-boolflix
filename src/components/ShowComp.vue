@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="row">
-            <h2 class="text-uppercase text-center" v-if="films.length > 0">films :</h2>
-            <div class="col-3 cardBoolfix" v-for="elm, index in films" :key="index">
-                <div>Titolo:{{elm.title}}</div>
-                <div>Titolo originale: {{elm.original_title}}</div>
+            <h2 class="text-uppercase text-center" v-if="show.length > 0">tv shows :</h2>
+            <div class="col-3 cardBoolfix" v-for="elm, index in show" :key="index">
+                <div>Titolo:{{elm.name}}</div>
+                <div>Titolo originale: {{elm.original_name}}</div>
                 <div>Voto: {{elm.vote_average}}</div>
                 <div>Overview: {{elm.overview}}</div>
                 <div class="d-flex justify-content-between">
@@ -21,9 +21,9 @@
 
 <script>
 export default {
-    name: 'FilmComp',
+    name: 'ShowComp',
     props: {
-        films: Array,
+        show: Array,
     },
     methods:{
         whatFlag(obj){
@@ -41,7 +41,7 @@ export default {
                 return "https://e7.pngegg.com/pngimages/389/161/png-clipart-sign-symbol-x-mark-check-mark-christian-cross-symbol-miscellaneous-angle.png"
             }
         }
-    }
+    }    
 }
 </script>
 
