@@ -6,7 +6,7 @@
 </template>
 
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 import "bootstrap"
 import HeaderComp from './components/HeaderComp.vue'
 import MainComp from './components/MainComp.vue'
@@ -30,6 +30,12 @@ export default {
     saveSearch(txt){
       this.inputSearch = txt
       console.log(this.inputSearch)
+      axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&language=it-IT&query=${txt}`)
+      .then( (res)=>{
+      this.moviesArray = res.data.results
+      console.log(this.moviesArray)
+    } )
+ 
     }
   }
 }
