@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComp @userSearch="saveSearch" />
-    <MainComp/>
+    <MainComp :movies="moviesArray" />
   </div>
 </template>
 
