@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderComp @userSearch="saveSearch" />
+    <HeaderComp @userSearch="saveSearch"/>
     <MainComp :movies="moviesArray" :shows="showArray" />
   </div>
 </template>

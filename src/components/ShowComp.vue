@@ -1,9 +1,9 @@
 <template>
     <div class="container">
         <div class="row">
-            <h2 class="text-uppercase text-center" v-if="show.length > 0">tv shows :</h2>
-            <div class="col-3 cardBoolfix" v-for="elm, index in show" :key="index">
-                <div>Titolo:{{elm.name}}</div>
+            <h2 class="text-uppercase py-4 text-center" v-if="show.length > 0">tv shows :</h2>
+            <div class="col cardBoolfix mb-5 justify-content-center d-flex" v-for="elm, index in show" :key="index">
+                <!-- <div>Titolo:{{elm.name}}</div>
                 <div>Titolo originale: {{elm.original_name}}</div>
                 <div>Voto: {{elm.vote_average}}</div>
                 <div>Overview: {{elm.overview}}</div>
@@ -13,7 +13,35 @@
                         <img class="w-100" :src="whatFlag(elm)" alt="">
                     </div> 
                     
+                </div> -->
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="h-100" :src="`https://image.tmdb.org/t/p/w342${elm.poster_path}`" :alt="`poster of ${elm.original_name}`">
+                        </div>
+                        <div class="flip-card-back bg-dark p-5">
+                            <div><strong>Titolo:</strong> {{elm.name}}</div>
+                            <p> <strong>Titolo originale:</strong> {{elm.original_name}}</p>
+                            <div>
+                                <span class="me-3"><strong>Voto :</strong></span>
+                                <span class="fs-2" :class="ceilVote(elm) > 1? 'text-warning' : ''">&#9733;</span>
+                                <span class="fs-2" :class="ceilVote(elm) > 2? 'text-warning' : ''">&#9733;</span>
+                                <span class="fs-2" :class="ceilVote(elm) > 3? 'text-warning' : ''">&#9733;</span>
+                                <span class="fs-2" :class="ceilVote(elm) > 4? 'text-warning' : ''">&#9733;</span>
+                                <span class="fs-2" :class="ceilVote(elm) >= 5? 'text-warning' : ''">&#9733;</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-item-center py-2 px-4">
+                                <span><strong>Lingua:</strong></span>
+                                <div class="flagContainer">
+                                    <img class="w-100" :src="whatFlag(elm)" alt="">
+                                </div>
+                            </div>
+                            <p v-if="elm.overview != ''" class="text-start"><strong>Overview:</strong> {{elm.overview}}</p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -40,7 +68,10 @@ export default {
             } else{
                 return "https://e7.pngegg.com/pngimages/389/161/png-clipart-sign-symbol-x-mark-check-mark-christian-cross-symbol-miscellaneous-angle.png"
             }
-        }
+        },
+            ceilVote(obj){
+                return Math.ceil(obj.vote_average / 2)
+            }        
     }    
 }
 </script>

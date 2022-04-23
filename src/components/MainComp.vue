@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-secondary containerCustom">
         <FilmComp :films="movies" />
         <ShowComp :show="shows" />
     </div>
@@ -22,5 +22,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .containerCustom{
+        min-height: calc(100vh - 88px);
+    }
 </style>
