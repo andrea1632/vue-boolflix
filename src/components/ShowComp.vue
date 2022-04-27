@@ -3,24 +3,12 @@
         <div class="row">
             <h2 class="text-uppercase py-4 text-center" v-if="show.length > 0">tv shows :</h2>
             <div class="col cardBoolfix mb-5 justify-content-center d-flex" v-for="elm, index in show" :key="index">
-                <!-- <div>Titolo:{{elm.name}}</div>
-                <div>Titolo originale: {{elm.original_name}}</div>
-                <div>Voto: {{elm.vote_average}}</div>
-                <div>Overview: {{elm.overview}}</div>
-                <div class="d-flex justify-content-between">
-                    <span>Lingua:</span>
-                    <div class="flagContainer">
-                        <img class="w-100" :src="whatFlag(elm)" alt="">
-                    </div> 
-                    
-                </div> -->
-
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
                             <img class="h-100" :src="`https://image.tmdb.org/t/p/w342${elm.poster_path}`" :alt="`poster of ${elm.original_name}`">
                         </div>
-                        <div class="flip-card-back bg-dark p-5">
+                        <div class="flip-card-back bg-dark p-5" @mouseover="getCast(elm.id)">
                             <div><strong>Titolo:</strong> {{elm.name}}</div>
                             <p> <strong>Titolo originale:</strong> {{elm.original_name}}</p>
                             <div>
@@ -38,6 +26,13 @@
                                 </div>
                             </div>
                             <p v-if="elm.overview != ''" class="text-start"><strong>Overview:</strong> {{elm.overview}}</p>
+                            <div v-if="castArray.length > 0">
+                                <h3 class="text-uppercase">attori:</h3>
+                                <div v-for="actor,y in castArray" :key="y" class="text-start">
+                                    <strong>Nome:</strong>
+                                    <span class="ms-3">{{castArray[y].name}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,11 +43,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'ShowComp',
     props: {
         show: Array,
     },
+    data(){
+    return{
+    apiKey: "e2f2427f18131144ee68125bfac38779",
+    castArray: [],
+    }
+    },    
     methods:{
         whatFlag(obj){
             if (obj.original_language == "en"){
@@ -71,6 +73,12 @@ export default {
         },
             ceilVote(obj){
                 return Math.ceil(obj.vote_average / 2)
+            },
+            getCast(movie){
+            axios.get(` https://api.themoviedb.org/3/tv/${movie}/credits?api_key=${this.apiKey}&language=it-IT `)
+            .then( (res)=>{
+            this.castArray = res.data.cast.slice(0,5)      
+            } )
             }        
     }    
 }

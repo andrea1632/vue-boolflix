@@ -3,16 +3,6 @@
         <div class="row">
             <h2 class="text-uppercase py-4 text-center" v-if="films.length > 0">films :</h2>
             <div class="col cardBoolfix mb-5 justify-content-center d-flex" v-for="elm, index in films" :key="index">
-                <!-- <div>Titolo:{{elm.title}}</div>
-                <div>Titolo originale: {{elm.original_title}}</div>
-                <div>Voto: {{elm.vote_average}}</div>
-                <div>Overview: {{elm.overview}}</div>
-                <div class="d-flex justify-content-between">
-                    <span>Lingua:</span>
-                    <div class="flagContainer">
-                        <img class="w-100" :src="whatFlag(elm)" alt="">
-                    </div>                     
-                </div> -->
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -36,12 +26,12 @@
                                 </div>
                             </div>
                             <p v-if="elm.overview != ''" class="text-start"><strong>Overview:</strong> {{elm.overview}}</p>
-                            <div>
+                            <div v-if="castArray.length > 0">
                                 <h3 class="text-uppercase">attori:</h3>
                                 <div v-for="actor,y in castArray" :key="y" class="text-start">
                                     <strong>Nome:</strong>
                                     <span class="ms-3">{{castArray[y].name}}</span>
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </div>
