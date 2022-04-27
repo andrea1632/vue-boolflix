@@ -18,7 +18,7 @@
                         <div class="flip-card-front">
                             <img class="h-100" :src="`https://image.tmdb.org/t/p/w342${elm.poster_path}`" :alt="`poster of ${elm.original_title}`">
                         </div>
-                        <div class="flip-card-back bg-dark p-5">
+                        <div class="flip-card-back bg-dark p-5" @mouseover="getCast(elm.id)">
                             <div><strong>Titolo:</strong> {{elm.title}}</div>
                             <p> <strong>Titolo originale:</strong> {{elm.original_title}}</p>
                             <div>
@@ -36,12 +36,12 @@
                                 </div>
                             </div>
                             <p v-if="elm.overview != ''" class="text-start"><strong>Overview:</strong> {{elm.overview}}</p>
-                            <div v-for="actor,y in getCast(elm)" :key="y">
-                                <!-- {{getCast(elm.id)}}
-                                {{castArray[elm.id].name}} -->
-
-                                <!-- adesso sto provando a ciclare con il computed -->
-                                <!-- {{actor.name}} -->
+                            <div>
+                                <h3 class="text-uppercase">attori:</h3>
+                                <div v-for="actor,y in castArray" :key="y" class="text-start">
+                                    <strong>Nome:</strong>
+                                    <span class="ms-3">{{castArray[y].name}}</span>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -83,14 +83,12 @@
             ceilVote(obj){
                 return Math.ceil(obj.vote_average / 2)
             },
-            computed: {
-                getCast(movie){
+            getCast(movie){
                 axios.get(` https://api.themoviedb.org/3/movie/${movie}/credits?api_key=${this.apiKey}&language=it-IT `)
-                .then( (res)=>{
-                return res.data.cast          
+            .then( (res)=>{
+                this.castArray = res.data.cast.slice(0,5)          
             } )
             }
-            },
         }
     }
 </script>
