@@ -36,6 +36,13 @@
                                 </div>
                             </div>
                             <p v-if="elm.overview != ''" class="text-start"><strong>Overview:</strong> {{elm.overview}}</p>
+                            <div v-for="actor,y in getCast(elm)" :key="y">
+                                <!-- {{getCast(elm.id)}}
+                                {{castArray[elm.id].name}} -->
+
+                                <!-- adesso sto provando a ciclare con il computed -->
+                                <!-- {{actor.name}} -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,10 +52,17 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: 'FilmComp',
         props: {
             films: Array,
+        },
+        data(){
+            return{
+                apiKey: "e2f2427f18131144ee68125bfac38779",
+                castArray: [],
+            }
         },
         methods: {
             whatFlag(obj) {
@@ -68,7 +82,15 @@
             },
             ceilVote(obj){
                 return Math.ceil(obj.vote_average / 2)
+            },
+            computed: {
+                getCast(movie){
+                axios.get(` https://api.themoviedb.org/3/movie/${movie}/credits?api_key=${this.apiKey}&language=it-IT `)
+                .then( (res)=>{
+                return res.data.cast          
+            } )
             }
+            },
         }
     }
 </script>
